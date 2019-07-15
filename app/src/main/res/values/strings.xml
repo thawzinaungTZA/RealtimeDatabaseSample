@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">RealtimeDatabaseSample</string>
+    <string name="save_message">Save Message</string>
+    <string name="enter_message">Enter message</string>
+    <string name="username">UserName</string>
+    <string name="email">Email</string>
+    <string name="save_user">Save User</string>
+    <string name="failed_to_read">Failed to read value</string>
 </resources>

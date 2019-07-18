@@ -1,9 +1,12 @@
 package com.example.realtimedatabasesample
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        retrieveToken()
+
         messageRef = FirebaseDatabase.getInstance().getReference("message")
         databaseRef = FirebaseDatabase.getInstance().reference
         userRef = FirebaseDatabase.getInstance().getReference("users")//.child(userId)
@@ -102,5 +107,17 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun retrieveToken() {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener {
+                if (!it.isSuccessful) {
+                    return@OnCompleteListener
+                }
+                val token = it.result?.token
+                Log.d("Token", "$token")
+                Toast.makeText(baseContext, "Token: $token", Toast.LENGTH_LONG).show()
+            })
     }
 }
